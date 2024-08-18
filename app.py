@@ -1,12 +1,37 @@
+from flask import Flask, request, send_file, jsonify
 import torchaudio
 from audiocraft.models import AudioGen
 from audiocraft.data.audio import audio_write
+import io
 
+app = Flask(__name__)
+
+# Инициализируйте модель
 model = AudioGen.get_pretrained('facebook/audiogen-medium')
-model.set_generation_params(duration=5)  # generate 5 seconds.
-descriptions = ['dog barking', 'sirene of an emergency vehicle', 'footsteps in a corridor']
-wav = model.generate(descriptions)  # generates 3 samples.
 
-for idx, one_wav in enumerate(wav):
-    # Will save under {idx}.wav, with loudness normalization at -14 db LUFS.
-    audio_write(f'{idx}', one_wav.cpu(), model.sample_rate, strategy="loudness", loudness_compressor=True)
+@app.route('/generate-audio', methods=['POST'])
+def generate_audio():
+    data = request.json
+    descriptions = data.get('descriptions', [])
+    
+    # Получите значение duration из запроса
+    duration = data.get('duration', 5)
+    
+    # Проверьте, чтобы duration был числом и в допустимом диапазоне
+    if not isinstance(duration, int) or not (5 <= duration <= 300):
+        duration = 5
+    
+    model.set_generation_params(duration=duration)
+    
+    wav = model.generate(descriptions)
+    
+    # Создайте буфер для первого аудиофайла
+    buffer = io.BytesIO()
+    audio_write(buffer, wav[0].cpu(), model.sample_rate, strategy="loudness", loudness_compressor=True)
+    buffer.seek(0)
+
+    # Отправьте файл в ответе
+    return send_file(buffer, attachment_filename='generated_audio.wav', as_attachment=True)
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)

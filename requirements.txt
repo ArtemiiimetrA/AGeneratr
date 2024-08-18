@@ -1,22 +1,11 @@
-# please make sure you have already a pytorch install that is cuda enabled!
-av
-einops
-flashy>=0.0.1
-hydra-core>=1.1
-hydra_colorlog
-julius
-num2words
-numpy
-sentencepiece
-spacy==3.5.2
-torch>=2.0.0
-torchaudio>=2.0.0
-huggingface_hub
-tqdm
-transformers>=4.31.0  # need Encodec there.
-xformers
-demucs
-librosa
-gradio
-torchmetrics
-encodec
+# Best to make sure you have torch installed first, in particular before installing xformers.
+# Don't run this if you already have PyTorch installed.
+# pip install 'torch==2.0'
+
+# python3.9 mandatory
+torch==2.0.0 
+torchvision==0.15.1 
+torchaudio==2.0.1
+xformers==0.0.20
+audiocraft
+flask
