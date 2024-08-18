@@ -25,6 +25,7 @@ WORKDIR /app
 
 # Скопируйте ваш скрипт в контейнер
 COPY app.py /app/app.py
+COPY requirements.txt /app/requirements.txt
 
 # Откройте порт 5000
 EXPOSE 5000
