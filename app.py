@@ -3,7 +3,7 @@ import torchaudio
 from audiocraft.models import AudioGen
 from audiocraft.data.audio import audio_write
 import io
-
+ 
 app = Flask(__name__)
 
 # Инициализируйте модель
