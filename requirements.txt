@@ -3,9 +3,5 @@
 # pip install 'torch==2.0'
 
 # python3.9 mandatory
-torch==2.0.0 
-torchvision==0.15.1 
-torchaudio==2.0.1
-xformers==0.0.20
 audiocraft
 flask
