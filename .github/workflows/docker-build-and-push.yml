@@ -21,8 +21,8 @@ jobs:
 
     - name: Build Docker image
       run: |
-        docker build -t myusername/audiocraft-api:latest .
+        docker build -t artemiiimetra/audiocraft-api:latest .
 
     - name: Push Docker image
       run: |
-        docker push myusername/audiocraft-api:latest
+        docker push artemiiimetra/audiocraft-api:latest
