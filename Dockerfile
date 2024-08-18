@@ -12,6 +12,8 @@ RUN apt-get update && \
 RUN update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.9 1 && \
     update-alternatives --install /usr/bin/python python /usr/bin/python3.9 1
 
+WORKDIR /app
+
 # Обновите pip
 RUN pip install -r requirements.txt
 RUN python -m pip install --upgrade pip setuptools wheel
@@ -21,7 +23,7 @@ RUN pip install torch==2.1.0
 RUN pip install audiocraft
 
 # Создайте рабочую директорию
-WORKDIR /app
+
 
 # Скопируйте ваш скрипт в контейнер
 COPY app.py /app/app.py
